@@ -6,9 +6,20 @@ EventBridgeを使用したイベント駆動アーキテクチャのデモンス
 
 このアプリケーションは、レストランの注文システムをシミュレートしたイベント駆動アーキテクチャです：
 
-```
-OrderFunction → EventBridge (EventBridgeDemo-bus) → KitchenFunction
-                                                  → ReceiptFunction
+```mermaid
+sequenceDiagram
+    participant User as ユーザー
+    participant Order as OrderFunction
+    participant EventBridge as EventBridge<br/>(EventBridgeDemo-bus)
+    participant Kitchen as KitchenFunction
+    participant Receipt as ReceiptFunction
+
+    User->>Order: 注文リクエスト
+    Order->>EventBridge: OrderCreatedイベント送信
+    EventBridge->>Kitchen: イベント配信
+    EventBridge->>Receipt: イベント配信
+    Kitchen-->>User: 調理開始通知
+    Receipt-->>User: レシート発行
 ```
 
 ## 構成要素
