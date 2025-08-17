@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  demo-evb-2025
+
+Globals:
+  Function:
+    Timeout: 10
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+Resources:
+  OrderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: demo-evb-OrderFunction
+      CodeUri: functions/order
+      Handler: app.lambda_handler
+      Runtime: python3.13
+      Architectures:
+      - x86_64
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - events:PutEvents
+              Resource: !Sub 'arn:aws:events:${AWS::Region}:${AWS::AccountId}:event-bus/EventBridgeDemo-bus'
+  KitchenFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: demo-evb-KitchenFunction
+      CodeUri: functions/kitchen
+      Handler: app.lambda_handler
+      Runtime: python3.13
+      Architectures:
+      - x86_64
+  ReceiptFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: demo-evb-ReceiptFunction
+      CodeUri: functions/receipt
+      Handler: app.lambda_handler
+      Runtime: python3.13
+      Architectures:
+      - x86_64
