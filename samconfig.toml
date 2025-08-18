@@ -19,6 +19,7 @@ resolve_s3 = true
 s3_prefix = "demo-evb-2025"
 region = "ap-northeast-1"
 image_repositories = []
+parameter_overrides = "EventBusName=\"demo-evb-bus\""
 
 [default.package.parameters]
 resolve_s3 = true

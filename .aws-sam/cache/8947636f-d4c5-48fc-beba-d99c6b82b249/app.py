@@ -2,6 +2,7 @@ import json
 import boto3
 import datetime
 import base64
+import os
 from aws_xray_sdk.core import patch
 patch(['boto3'])
 
@@ -20,7 +21,7 @@ def lambda_handler(event, context):
                order["orderId"]
             ],
             "Detail": json.dumps(order),
-            "EventBusName": "EventBridgeDemo-bus"
+            "EventBusName": os.environ.get('EVENT_BUS')
         }]
     )
     #
